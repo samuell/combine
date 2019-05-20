@@ -9,7 +9,9 @@ func main() {
 
 	out := combinator(a1, a2, a3)
 
-	fmt.Println("Out: ", out)
+	for i, a := range out {
+		fmt.Printf("Out array [%d]: %v\n", i, a)
+	}
 }
 
 func combinator(as ...[]string) [][]string {
@@ -22,20 +24,21 @@ func combinator(as ...[]string) [][]string {
 	res := [][]string{}
 
 	if len(as) > 1 {
+		bs := combinator(as[1:]...)
 		for _, p := range as[0] {
-			for i := 0; i < len(as[1]); i++ {
+			for i := 0; i < len(bs[0]); i++ {
 				if len(res) == 0 {
 					res = append(res, []string{})
 				}
 				// Repeat the current part in the current top part of the array
 				res[0] = append(res[0], p)
 			}
-			for j := 1; j < len(as); j++ {
-				if len(res) <= j {
+			for j := 0; j < len(bs); j++ {
+				if len(res) <= j+1 {
 					res = append(res, []string{})
 				}
 				// Just pad on the rest
-				res[j] = append(res[j], as[j]...)
+				res[j+1] = append(res[j], bs[j]...)
 			}
 		}
 	}
