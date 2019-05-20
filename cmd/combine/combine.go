@@ -8,7 +8,7 @@ import (
 
 func main() {
 	if len(os.Args) < 2 {
-		fmt.Println("Usage example:\n\n./combinator a,b x,y,z 1,2,3,4\n\nAuthor: Samuel Lampa")
+		fmt.Println("Usage example:\n\n./combine a,b x,y,z 1,2,3,4\n\nAuthor: Samuel Lampa")
 		return
 	}
 
@@ -19,7 +19,7 @@ func main() {
 		sets[i] = strings.Split(arg, ",")
 	}
 
-	out := combinator(sets...)
+	out := combine(sets...)
 
 	for _, a := range out {
 		row := strings.Join(a, ", ")
@@ -27,7 +27,7 @@ func main() {
 	}
 }
 
-func combinator(as ...[]string) [][]string {
+func combine(as ...[]string) [][]string {
 
 	// Default case
 	if len(as) == 1 {
@@ -37,7 +37,7 @@ func combinator(as ...[]string) [][]string {
 	res := [][]string{}
 
 	if len(as) > 1 {
-		bs := combinator(as[1:]...)
+		bs := combine(as[1:]...)
 		head := as[0]
 		for _, p := range head {
 			for i := 0; i < len(bs[0]); i++ {

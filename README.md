@@ -5,14 +5,14 @@ Install
 -------
 
 ```bash
-go get github.com/samuell/comb/...
+go get github.com/samuell/combine/...
 ```
 
 Usage
 -----
 
 ```bash
-$ ./combinator a,b x,y,z 1,2,3,4
+$ ./combine a,b x,y,z 1,2,3,4
 a, a, a, a, a, a, a, a, a, a, a, a, b, b, b, b, b, b, b, b, b, b, b, b
 x, x, x, x, y, y, y, y, z, z, z, z, x, x, x, x, y, y, y, y, z, z, z, z
 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4
