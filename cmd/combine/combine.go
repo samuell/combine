@@ -12,50 +12,50 @@ func main() {
 		return
 	}
 
-	args := os.Args[1:]
+	programArgs := os.Args[1:]
 
-	sets := make([][]string, len(args))
-	for i, arg := range args {
-		sets[i] = strings.Split(arg, ",")
+	input := make([][]string, len(programArgs))
+	for i, arg := range programArgs {
+		input[i] = strings.Split(arg, ",")
 	}
 
-	out := combine(sets...)
+	result := combine(input)
 
-	for _, a := range out {
-		row := strings.Join(a, ", ")
+	for _, str := range result {
+		row := strings.Join(str, ", ")
 		fmt.Println(row)
 	}
 }
 
-func combine(as ...[]string) [][]string {
+func combine(input [][]string) [][]string {
 
 	// Default case
-	if len(as) == 1 {
-		return as
+	if len(input) == 1 {
+		return input
 	}
 
-	res := [][]string{}
+	result := [][]string{}
 
-	if len(as) > 1 {
-		bs := combine(as[1:]...)
-		head := as[0]
+	if len(input) > 1 {
+		head := input[0]
+		tail := combine(input[1:]) // Recursive call
 		for _, p := range head {
-			for i := 0; i < len(bs[0]); i++ {
-				if len(res) == 0 {
-					res = append(res, []string{})
+			for i := 0; i < len(tail[0]); i++ {
+				if len(result) == 0 {
+					result = append(result, []string{})
 				}
 				// Repeat the current part in the current top part of the array
-				res[0] = append(res[0], p)
+				result[0] = append(result[0], p)
 			}
-			for j := 0; j < len(bs); j++ {
-				if len(res) <= j+1 {
-					res = append(res, []string{})
+			for j := 1; j <= len(tail); j++ {
+				if len(result) <= j {
+					result = append(result, []string{})
 				}
 				// Just pad on the rest
-				res[j+1] = append(res[j+1], bs[j]...)
+				result[j] = append(result[j], tail[j-1]...)
 			}
 		}
 	}
 
-	return res
+	return result
 }
