@@ -25,7 +25,8 @@ func combinator(as ...[]string) [][]string {
 
 	if len(as) > 1 {
 		bs := combinator(as[1:]...)
-		for _, p := range as[0] {
+		head := as[0]
+		for _, p := range head {
 			for i := 0; i < len(bs[0]); i++ {
 				if len(res) == 0 {
 					res = append(res, []string{})
@@ -38,7 +39,7 @@ func combinator(as ...[]string) [][]string {
 					res = append(res, []string{})
 				}
 				// Just pad on the rest
-				res[j+1] = append(res[j], bs[j]...)
+				res[j+1] = append(res[j+1], bs[j]...)
 			}
 		}
 	}
