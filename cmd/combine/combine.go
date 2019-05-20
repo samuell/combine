@@ -30,30 +30,28 @@ func main() {
 func combine(input [][]string) [][]string {
 
 	// Default case
-	if len(input) == 1 {
+	if len(input) <= 1 {
 		return input
 	}
 
-	result := [][]string{}
+	head := input[0]
+	tail := combine(input[1:]) // Recursive call
 
-	if len(input) > 1 {
-		head := input[0]
-		tail := combine(input[1:]) // Recursive call
-		for _, p := range head {
-			for i := 0; i < len(tail[0]); i++ {
-				if len(result) == 0 {
-					result = append(result, []string{})
-				}
-				// Repeat the current part in the current top part of the array
-				result[0] = append(result[0], p)
+	result := [][]string{}
+	for _, p := range head {
+		for i := 0; i < len(tail[0]); i++ {
+			if len(result) == 0 {
+				result = append(result, []string{})
 			}
-			for j := 1; j <= len(tail); j++ {
-				if len(result) <= j {
-					result = append(result, []string{})
-				}
-				// Just pad on the rest
-				result[j] = append(result[j], tail[j-1]...)
+			// Repeat the current part in the current top part of the array
+			result[0] = append(result[0], p)
+		}
+		for j := 1; j <= len(tail); j++ {
+			if len(result) <= j {
+				result = append(result, []string{})
 			}
+			// Just pad on the rest
+			result[j] = append(result[j], tail[j-1]...)
 		}
 	}
 
