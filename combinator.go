@@ -1,16 +1,29 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+	"strings"
+)
 
 func main() {
-	a1 := []string{"a", "b", "c"}
-	a2 := []string{"1", "2", "3"}
-	a3 := []string{"x", "y", "z"}
+	if len(os.Args) < 2 {
+		fmt.Println("Usage example:\n\n./combinator a,b x,y,z 1,2,3,4\n\nAuthor: Samuel Lampa")
+		return
+	}
 
-	out := combinator(a1, a2, a3)
+	args := os.Args[1:]
 
-	for i, a := range out {
-		fmt.Printf("Out array [%d]: %v\n", i, a)
+	sets := make([][]string, len(args))
+	for i, arg := range args {
+		sets[i] = strings.Split(arg, ",")
+	}
+
+	out := combinator(sets...)
+
+	for _, a := range out {
+		row := strings.Join(a, ", ")
+		fmt.Println(row)
 	}
 }
 
